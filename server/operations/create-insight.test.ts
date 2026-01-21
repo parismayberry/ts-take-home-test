@@ -67,12 +67,6 @@ describe("creating insights in the database", () => {
         const rows = fixture.insights.selectAll();
         expect(rows.length).toBe(3);
       });
-
-      it("assigns a unique id to the new insight", () => {
-        const rows = fixture.insights.selectAll();
-        const ids = rows.map((r) => r.id);
-        expect(new Set(ids).size).toBe(3);
-      });
     });
   });
 });

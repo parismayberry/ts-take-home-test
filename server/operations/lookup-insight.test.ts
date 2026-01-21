@@ -1,54 +1,34 @@
-import { expect } from "@std/expect";
 import { beforeAll, describe, it } from "@std/testing/bdd";
-import type { Insight } from "$models/insight.ts";
+import { expect } from "@std/expect";
 import { withDB } from "../testing.ts";
-import listInsights from "./list-insights.ts";
+import type { Insight } from "$models/insight.ts";
+import lookupInsight from "./lookup-insight.ts";
 
 describe("listing insights in the database", () => {
-  describe("nothing in the DB", () => {
+  describe("specified insight not in the DB", () => {
     withDB((fixture) => {
-      let result: Insight[];
+      let result: Insight | undefined;
 
       beforeAll(() => {
-        result = listInsights(fixture);
+        result = lookupInsight({ ...fixture, id: 0 });
       });
 
-      it("returns empty result", () => {
-        expect(result).toEqual([]);
+      it("returns undefined", () => {
+        expect(result).toBeUndefined();
       });
     });
   });
 
-  describe("populated DB", () => {
+  describe("insight is in the DB", () => {
     withDB((fixture) => {
       const insights: Insight[] = [
-        {
-          id: 1,
-          brand: 0,
-          createdAt: new Date("2026-01-01T00:00:00.000Z"),
-          text: "1",
-        },
-        {
-          id: 2,
-          brand: 0,
-          createdAt: new Date("2026-01-02T00:00:00.000Z"),
-          text: "2",
-        },
-        {
-          id: 3,
-          brand: 1,
-          createdAt: new Date("2026-01-03T00:00:00.000Z"),
-          text: "3",
-        },
-        {
-          id: 4,
-          brand: 4,
-          createdAt: new Date("2026-01-04T00:00:00.000Z"),
-          text: "4",
-        },
+        { id: 1, brand: 0, createdAt: new Date(), text: "1" },
+        { id: 2, brand: 0, createdAt: new Date(), text: "2" },
+        { id: 3, brand: 1, createdAt: new Date(), text: "3" },
+        { id: 4, brand: 4, createdAt: new Date(), text: "4" },
       ];
 
-      let result: Insight[];
+      let result: Insight | undefined;
 
       beforeAll(() => {
         fixture.insights.insert(
@@ -57,16 +37,11 @@ describe("listing insights in the database", () => {
             createdAt: it.createdAt.toISOString(),
           })),
         );
-        result = listInsights(fixture);
+        result = lookupInsight({ ...fixture, id: 3 });
       });
 
-      it("returns non-empty result", () => {
-        expect(result.length).toBeGreaterThan(0);
-      });
-
-      it("returns all insights in the DB", () => {
-        expect(result).toEqual(insights);
+      it("returns the expected insight", () => {
+        expect(result).toEqual(insights[2]);
       });
     });
   });
-});
