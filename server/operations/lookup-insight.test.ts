@@ -1,5 +1,5 @@
-import { beforeAll, describe, it } from "jsr:@std/testing/bdd";
-import { expect } from "jsr:@std/expect";
+import { beforeAll, describe, it } from "@std/testing/bdd";
+import { expect } from "@std/expect";
 import { withDB } from "../testing.ts";
 import type { Insight } from "$models/insight.ts";
 import lookupInsight from "./lookup-insight.ts";
@@ -13,7 +13,7 @@ describe("listing insights in the database", () => {
         result = lookupInsight({ ...fixture, id: 0 });
       });
 
-      it("returns nothing", () => {
+      it("returns undefined", () => {
         expect(result).toBeUndefined();
       });
     });

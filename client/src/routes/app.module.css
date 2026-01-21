@@ -6,6 +6,30 @@
   }
 }
 
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-4);
+  margin-top: var(--size-4);
+  padding: var(--size-4);
+  background: var(--color-red-300);
+  color: var(--color-red-700);
+  border-radius: var(--radius-sm);
+  font: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.error-dismiss {
+  cursor: pointer;
+  padding: var(--size-1) var(--size-2);
+  border-radius: var(--radius-xs);
+  transition: background 150ms ease;
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
 .insights {
   margin-top: var(--size-10);
 }

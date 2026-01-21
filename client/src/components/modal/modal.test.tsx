@@ -5,14 +5,14 @@ import { Modal } from "./modal.tsx";
 describe("Modal", () => {
   it("should open and close", () => {
     render(
-      <Modal open={false} onClose={() => undefined}>
+      <Modal onClose={() => undefined}>
         Closed modal
       </Modal>,
     );
     expect(screen.queryByText("Closed modal")).toBeFalsy();
 
     render(
-      <Modal open={true} onClose={() => undefined}>
+      <Modal open onClose={() => undefined}>
         <div>Open modal</div>
       </Modal>,
     );
