@@ -43,3 +43,8 @@
   font: var(--text-lg);
   margin: var(--size-4) 0 0;
 }
+
+.loading {
+  color: var(--color-text-light);
+  font-style: italic;
+}
