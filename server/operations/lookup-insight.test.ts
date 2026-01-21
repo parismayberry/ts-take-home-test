@@ -45,3 +45,4 @@ describe("listing insights in the database", () => {
       });
     });
   });
+});
