@@ -1,8 +1,12 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 import { AddInsight } from "./add-insight.tsx";
 
 describe("AddInsight", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   it("renders when open", () => {
     render(<AddInsight open onClose={() => undefined} />);
     expect(screen.getByText("Add a new insight")).toBeTruthy();
@@ -24,6 +28,6 @@ describe("AddInsight", () => {
   it("has submit button disabled when text is empty", () => {
     render(<AddInsight open onClose={() => undefined} />);
     const button = screen.getByRole("button", { name: "Add insight" });
-    expect(button).toBeDisabled();
+    expect(button.hasAttribute("disabled")).toBe(true);
   });
 });
