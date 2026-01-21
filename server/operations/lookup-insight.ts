@@ -1,4 +1,4 @@
-import type { Insight } from "$models/insight.ts";
+import { Insight } from "$models/insight.ts";
 import type { HasDBClient } from "../shared.ts";
 import type * as insightsTable from "$tables/insights.ts";
 
@@ -15,11 +15,10 @@ export default (input: Input): Insight | undefined => {
   >`SELECT * FROM insights WHERE id = ${input.id} LIMIT 1`;
 
   if (row) {
-    const result = { ...row, createdAt: new Date(row.createdAt) };
+    const result = Insight.parse(row);
     console.log("Insight retrieved:", result);
     return result;
   }
 
   console.log("Insight not found");
-  return;
 };

@@ -1,4 +1,4 @@
-import type { Insight } from "$models/insight.ts";
+import { Insight } from "$models/insight.ts";
 import type { HasDBClient } from "../shared.ts";
 import type * as insightsTable from "$tables/insights.ts";
 
@@ -9,10 +9,7 @@ export default (input: Input): Insight[] => {
 
   const rows = input.db.sql<insightsTable.Row>`SELECT * FROM insights`;
 
-  const result: Insight[] = rows.map((row) => ({
-    ...row,
-    createdAt: new Date(row.createdAt),
-  }));
+  const result = rows.map((row) => Insight.parse(row));
 
   console.log("Retrieved insights successfully: ", result);
   return result;
